@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style type="text/css">
+    .logon-window {
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: flex-start;
+        font: 500 14px/150% "Helvetica", sans-serif;
+    }
+
+    #particles-js {
+        width: 35%;
+        height: 100vh;
+        position: relative;
+    }
+
+    .logon-container {
+        width: 65%;
+        height: 100vh;
+        position: relative;
+        top: 0;
+        right: 0;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-window {
+        width: 550px;
+        left: 92px;
+        right: 92px;
+        position: relative;
+    }
+
+    .form-window h1 {
+        width: 100%;
+        padding: 32px 0;
+        font-size: 1.8rem;
+        font-weight: lighter;
+        box-sizing: border-box;
+    }
+
+    .input-group {
+        width: 100%;
+        padding: 16px 0;
+        box-sizing: border-box;
+    }
+
+    .input-group label {
+        width: 100%;
+        height: 36px;
+        line-height: 36px;
+        font-size: 15px;
+    }
+
+    .input-group input[type=text], input[type=password] {
+        width: 100%;
+        height: 36px;
+        padding: 0 5px;
+        box-sizing: border-box;
+        border: 1px solid #aaa;
+        border-radius: 2px;
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    button {
+        width: 100%;
+        height: 36px;
+        font-size: 14px;
+        line-height: 14px;
+        text-transform: uppercase;
+        background: #0C5E93;
+        background-image: linear-gradient(
+            to right,
+            #0C5E93, rgb(8, 69, 107)
+        );
+        border-radius: 2px;
+        border: 0;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .txt-conf {
+        width: 100%;
+        height: 64px;
+    }
+
+    .center {
+        display: flex;
+        align-items: center;   
+    }
+
+    .bottom-line {
+        border-bottom: 1px solid #aaa;
+    }
+
+    .space-between {
+        justify-content: space-between;
+    }
+
+    .login-form {
+        display: none;
+    }
+
+    @media screen and (max-width: 980px) {
+        #particles-js {
+            display: none;
+        }
+
+        .logon-container {
+            width: 100%;
+            display: block;
+        }
+
+        .form-window {
+            width: 100%;
+            padding: 36px;
+            left: auto;
+            right: auto;
+            bottom: auto;
+            top: auto;
+            margin: 0;
+            box-sizing: border-box;
+        }
+    }
+
+    @media screen and (max-width: 1024px) {
+        .logon-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-window {
+            width: 450px;
+            padding: 36px;
+            left: auto;
+            right: auto;
+            bottom: auto;
+            top: auto;
+            margin: 0;
+            box-sizing: border-box;
+        }
+    }
+
+    @media screen and (max-width: 980px) {
+        #particles-js {
+            display: none;
+        }
+
+        .logon-container {
+            width: 100%;
+            display: block;
+        }
+
+        .form-window {
+            width: 100%;
+            padding: 36px;
+            left: auto;
+            right: auto;
+            bottom: auto;
+            top: auto;
+            margin: 0;
+            box-sizing: border-box;
+        }
+    }
+    </style>
+
+</head>
+<body>
+
+    <script>
+    let err_msg = {
+        err_name: 'Ingrese un nombre de usuario'
+    };
+    let REG_ACCOUNT = document.querySelector('.reg_account');
+    REG_ACCOUNT.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (empty(document.querySelector('user_name'))) {
+            document.querySelector('.user-name').append('<div class="error">'+ err_msg[0] +'</div>');
+        }
+    })
+    </script>
+
+    <div class="logon-window">
+        <div id="particles-js"></div>
+        <div class="logon-container">
+            <div class="form-window registration-form" id="registration_session">
+                <h1> Crear tu cuenta </h1>
+                <form action="">
+                    <div class="input-group user-name">
+                        <label for=""> Nombre completo </label>
+                        <input type="text" name="" class="" id="" value="">
+                    </div>
+                    <div class="input-group">
+                        <label for=""> Correo electronico </label>
+                        <input type="text" name="" class="" id="" value="">
+                    </div>
+                    <div class="input-group">
+                        <label for=""> Contrasena </label>
+                        <input type="password" name="" class="" id="" value="">
+                    </div>
+                    <div class="input-group">
+                        <label for=""> Repetir contrasena </label>
+                        <input type="password" name="" class="" id="" value="">
+                    </div>
+
+                    <div class="txt-conf">
+                       <label for="confirm" name="confirm" id="confirm"> <input type="checkbox" name="confirm" id=""> Mantener la sesion iniciada </label>
+                    </div>
+
+                    <div class="action-button">
+                        <button class="reg_account"> crear cuenta </button>
+                    </div>
+
+                    <div class="txt-conf center bottom-line">
+                        <p> Ya tienes una cuenta? <a href="" id="log_"> Iniciar sesion </a> </p>
+                    </div>
+
+                    <div class="txt-conf center">
+                        <p> Al registrate aceptas los <a href="">Terminos</a> y <a href="">Politicas de privacidad</a> </p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="form-window login-form" id="login_session">
+                    <h1> Ingresa a tu cuenta </h1>
+                    <form action="">
+                        
+                        <div class="input-group">
+                            <label for=""> Correo electronico </label>
+                            <input type="text" name="" class="" id="" value="">
+                        </div>
+                        <div class="input-group">
+                            <label for=""> Contrasena </label>
+                            <input type="password" name="" class="" id="" value="">
+                        </div>
+    
+                        <div class="txt-conf">
+                           <label for="confirm" name="confirm" id="confirm"> <input type="checkbox" name="confirm" id=""> Recordar datos </label>
+                        </div>
+    
+                        <div class="action-button">
+                            <button> iniciar sesion </button>
+                        </div>
+    
+                        <div class="txt-conf center bottom-line">
+                            
+                        </div>
+    
+                        <div class="txt-conf center space-between">
+                            <div>
+                                <p> No tienes una cuenta? <a href="" id="reg_">Regitrate</a> </p>
+                            </div>
+                            <div>
+                                <p> Necesitas ayuda? <a href="">Politicas de privacidad</a> </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    // buttons
+    let LOG_ = document.getElementById('log_');
+    let REG_ = document.getElementById('reg_');
+    // containers
+    let LOG_SESSION = document.getElementById('login_session');
+    let REG_SESSION = document.getElementById('registration_session');
+
+    LOG_.addEventListener('click', function(e) {
+        e.preventDefault();
+        LOG_SESSION.style.display = "block";
+        REG_SESSION.style.display = "none";
+    })
+
+
+    REG_.addEventListener('click', function() {
+        e.preventDefault();
+        REG_SESSION.style.display = "block";
+        LOG_SESSION.style.display = "none";
+    })
+    </script>
+    <script src="../particles.js"></script>
+    <script src="../js/app.js"></script>
+
+</body>
+</html>

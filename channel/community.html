@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>`#{title}`</title>
+    <style type="text/css">
+        body, html {
+            margin: 0;
+            padding: 0;
+
+            font: 500 14px/150px "Helvetica", sans-serif;
+        }
+        .row {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            top: 0;
+            left: 0;
+            background: #f0f0f0;
+            display: flex;
+        }
+
+        .col-md-4 {
+            width: 280px;
+            height: 100vh;
+            background-color: #011936;
+            position: relative;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+        }
+
+        h3 {
+            margin: 0;
+            padding: 0;
+            background: none;
+            box-sizing: border-box;
+            outline: 0;
+        }
+
+        .col-md-8 {
+            width: calc(100vw - 280px);
+            height: 100vh;
+            position: relative;
+            top: 0;
+            right: 0;
+        }
+
+        .header-location-breadcrumb {
+            width: 100%;
+            height: 73px;
+            background: white;
+            border-bottom: 1px solid rgb(194, 194, 194);
+            padding: 0 32px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .location-tag {
+            font-size: 1.6rem;
+            color: #353535;
+            
+        }
+
+        .chat {
+            width: 100%;
+            height: calc(100vh - 138px);
+            background-color: #ddd;
+            overflow: hidden;
+            overflow-y: scroll;
+        }
+
+        .form-group {
+            width: 100%;
+            height: 64px;
+            background: #B8B8D1;
+            overflow: hidden;
+            display: flex;
+            justify-content:  space-around;
+            align-items: center;
+        }
+
+        textarea {
+            width: calc(100% - 92px);
+            height: 36px;
+            line-height: 36px;
+            border-radius: 4px;
+            border: 1px solid rgb(149, 149, 156);
+            background: white;
+            resize: none;
+        }
+
+        i.media::before {
+            content: url(attach.svg);
+            display: block;
+            width: 24px;
+            height: 24px;
+        }
+
+        .reset {
+            margin: 0;
+            padding: 0;
+            background: none;
+            box-sizing: border-box;
+            outline: 0;
+        }
+
+        button[type=submit].btn {
+            height: 36px;
+            background: #0C5E93;
+            padding: 0 16px;
+            margin: 0 16px;
+            border-radius: 2px;
+            box-sizing: border-box;
+            outline: 0;
+            border: none;
+            color: white;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        input[type=submit].btn::before {
+            content: url(send.png);
+            display: block;
+            width: 24px;
+        }
+        
+        .logged-user-table {
+            width: 100%;
+            height: 128px;
+            background: rgba(0,0,0, .2);
+            box-sizing: 0 2px 4px -1px rgba(0,0,0,0.23);
+            z-index: 50
+        }
+
+        .well {
+            padding-top: 16px;
+            box-sizing: border-box;
+            width: 100%;
+            height: calc(50% - 64px);
+            position: relative;
+        }
+
+       .well h3 {
+            margin: 0;
+            padding: 0 16px;
+            width: 100%;
+            height: 48px;
+            box-sizing: border-box;
+            line-height: 48px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, .5);
+            font-weight: lighter;
+            text-transform: uppercase;
+        }
+
+        .menubtn {
+            padding: 0 16px;
+            height: 36px;
+            margin-right: 16px;
+            display: none;
+            background-image: url('menu.png');
+            
+        }
+
+        @media screen and (max-width: 980px) {
+            .col-md-4 {
+                position: fixed;
+                left: -100%;
+                transition: all .3s ease;
+            }
+
+            .col-md-8 {
+                position: relative;
+                width: 100%;
+            }
+
+            .menubtn {
+                display: block;
+            }
+        }
+
+        .emoji-cap {
+            width: 24px; height: 24px;
+            margin: 0 16px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="logged-user-table"></div>
+                <div class="well">
+                    <h3> Canales </h3>
+                </div>
+                <div class="well">
+                    <h3> mensajes directos ( <span data-direct-messages> 0 </span> ) </h3>
+                    <div class="direct-messages"></div>
+                    <script>
+                        let directMessages = document.querySelector('.direct-messages');
+                        directMessages.append('<span style="color: rgba(255,255,255, .7); font-size: 12px;">'+ No tienes mensajes directos +'</span>');
+                    </script>
+                    <ul class="list-group" id="users"></ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="header-location-breadcrumb">
+
+                    <button class="menubtn" onclick="getBackMenu()">
+                        <img src="menu.png" alt="">
+                    </button>
+
+                    <span class="location-tag" data-location> community </span>
+                    
+                </div>
+
+                <div class="chat" id="chat"></div>
+
+                <form action="" id="messageForm">
+                    <div class="form-group">
+                        <div class="emoji-cap"></div> 
+                        <textarea name="" class="form-control" id="message" cols="30" rows="10" value=""></textarea>
+                        <br />
+                        <button type="submit" class="btn btn-primary"> <img class="" src="http://localhost:3000/app/channel/send.png" alt="send"> </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+    $(function() {
+        var socket = io.connect();
+
+        var $messageForm = $('#messageForm');
+        var $message     = $('#message');
+        var $chat        = $('#chat');
+
+        $messageForm.submit(function(e) {
+            e.preventDefault();
+            socket.emit('send message ', $message.val());
+            $message.val(' ');
+        });
+
+        socket.on('new message', function(data) {
+            $chat.append('<div class="well">'+ data.msg +'</div>');
+        });
+    });
+
+    function show_menu() {
+        const spaceL = document.querySelectorAll('.col-md-4') || "";
+        spaceL.style.left = "0";
+    }
+    </script>
+</body>
+</html>
